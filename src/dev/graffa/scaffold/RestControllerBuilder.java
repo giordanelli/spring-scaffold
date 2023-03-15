@@ -14,7 +14,7 @@ public class RestControllerBuilder {
     static final String YES = "Y", NO = "N";
     protected static String repositoryClassName, repositoryPackage, entityClassName, idClassName, entityPackageName,
             basePackageName, serviceClassName, servicePackage, controllerClassName, controllerPackage, baseUrl,
-            sourceFolder;
+            sourceFolder,notFoundExceptionPackage;
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) throws IOException {
@@ -37,6 +37,7 @@ public class RestControllerBuilder {
         System.out.println("--- CONTROLLER ---");
         controllerClassName = entityClassName + "RestController";
         controllerPackage = basePackageName + JavaFileWriter.packageSeparator + "controllers.rest";
+        notFoundExceptionPackage=basePackageName + ".exceptions";
         baseUrl = entityClassName.toLowerCase();
 
         if (!repositoryAlreadyExists)
@@ -47,11 +48,11 @@ public class RestControllerBuilder {
             new ServiceClassBuilder(entityClassName, idClassName, entityPackageName, serviceClassName, servicePackage
                     , repositoryPackage, repositoryClassName, sourceFolder).serviceClass();
 
-        new NotFoundExceptionClassBuilder(basePackageName + ".exceptions", sourceFolder).notFoundClass();
+        new NotFoundExceptionClassBuilder(notFoundExceptionPackage, sourceFolder).notFoundClass();
 
         new RestControllerClassBuilder(entityClassName, idClassName, entityPackageName, servicePackage,
                 serviceClassName,
-                baseUrl, controllerClassName, controllerPackage, sourceFolder).controllerClass();
+                baseUrl, controllerClassName, controllerPackage, notFoundExceptionPackage,sourceFolder).controllerClass();
     }
 
     private static boolean getBoolean(String help) {

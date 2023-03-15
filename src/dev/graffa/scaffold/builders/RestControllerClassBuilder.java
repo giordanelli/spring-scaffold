@@ -8,11 +8,12 @@ import java.util.List;
 public class RestControllerClassBuilder {
 
     private String entityClassName, idClassName, entityPackageName, servicePackage, serviceClassName, baseUrl,
-            controllerClassName, controllerPackage, sourceFolder;
+            controllerClassName, controllerPackage, notFoundExceptionPackage, sourceFolder;
 
     public RestControllerClassBuilder(String entityClassName, String idClassName, String entityPackageName,
                                       String servicePackage, String serviceClassName, String baseUrl,
-                                      String controllerClassName, String controllerPackage, String sourceFolder) {
+                                      String controllerClassName, String controllerPackage,
+                                      String notFoundExceptionPackage,String sourceFolder) {
         this.entityClassName = entityClassName;
         this.idClassName = idClassName;
         this.entityPackageName = entityPackageName;
@@ -21,11 +22,12 @@ public class RestControllerClassBuilder {
         this.baseUrl = baseUrl;
         this.controllerClassName = controllerClassName;
         this.controllerPackage = controllerPackage;
+        this.notFoundExceptionPackage=notFoundExceptionPackage;
         this.sourceFolder = sourceFolder;
     }
 
     public void controllerClass() throws IOException {
-        List<String> imports = List.of("dev.graffa.scaffold.NotFoundException",
+        List<String> imports = List.of(notFoundExceptionPackage+".NotFoundException",
                 "org.springframework.beans.factory.annotation.Autowired", "org.springframework.http.ResponseEntity",
                 "java.util.List", "org.springframework.security.config" +
                         ".annotation.method.configuration.EnableMethodSecurity",
