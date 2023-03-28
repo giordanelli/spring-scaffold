@@ -81,7 +81,7 @@ public class JavaFileWriter {
             toPrint += indent + method.getVisibility() + space + method.getReturnObject() + space
                     + method.getName() + openParameters;
             if (method.getParameters() != null)
-                toPrint += method.getParameters().stream().map((param -> param.getType() + space + param.getName()))
+                toPrint += method.getParameters().stream().map((param -> param.getAnnotation() + space + param.getType() + space + param.getName()))
                         .collect(Collectors.joining(comma));
             toPrint += closeParameters + openSection + newLine;
             if (method.getInstructions() != null)
